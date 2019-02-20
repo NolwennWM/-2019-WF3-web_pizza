@@ -12,7 +12,11 @@ require_once "../private/app/src/err_reporting.php";
 require_once "../private/app/src/db_connect.php";
 // Routage de l'application.
 require_once "../private/app/src/routing.php";
-// Compilation
+// Inclusion des fonctions "Utils"
+require_once "../private/app/src/load_utils.php";
+// Compilation de la page
 require_once "../private/app/src/compile.php";
 
+
+echo randstr(100, false, true);
 ?>
