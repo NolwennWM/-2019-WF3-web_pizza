@@ -45,5 +45,21 @@ $db = [];
 // Inclusion de la config de la base de données.
 require_once "database.php";
 
+/**
+ * 4. Définition des variables de routage.
+ */
+
+// Définition de l'uri par défaut
+$uri = "/";
+
+// Définition de la table de routage par défaut
+$routes = [];
+
+// Contient les informations de la route courante
+$route = [];
+
+// Inclusion de la config de routage
+require_once "routes.php";
+
 
 ?>
