@@ -18,5 +18,4 @@ require_once "../private/app/src/load_utils.php";
 require_once "../private/app/src/compile.php";
 
 
-echo randstr(100, false, true);
 ?>

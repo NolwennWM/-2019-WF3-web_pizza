@@ -7,7 +7,7 @@ if(!function_exists('dumpME')){
      *
      * @param [mixed] $data
      */
-    function dumpME($data){
+    function dump($data){
         echo "<pre>";
         print_r($data);
         echo "</pre>";
