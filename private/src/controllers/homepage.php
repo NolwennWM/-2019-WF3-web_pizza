@@ -8,7 +8,7 @@
  */
 
  function homepage_index(){
-     echo "Accueil";
+    include_once "../private/src/views/homepage/index.php";
  }
 
 ?>

@@ -8,7 +8,7 @@
  */
 
  function account_index(){
-     echo "account";
+     include_once "../private/src/views/account/index.php";
  }
 
 ?>

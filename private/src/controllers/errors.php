@@ -8,7 +8,7 @@
  */
 
  function errors_404(){
-     echo "404 MOTHERFUCKER !";
+    include_once "../private/src/views/errors/404.php";
  }
 
 ?>

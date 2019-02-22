@@ -8,7 +8,7 @@
  */
 
  function order_index(){
-     echo "Commande";
+    include_once "../private/src/views/order/index.php";
  }
 
 ?>
