@@ -13,7 +13,6 @@ function contact_index(){
       $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : null;
       $email = isset($_POST['email']) ? $_POST['email'] : null;
       $message = isset($_POST['message']) ? $_POST['message'] : null;
-      $timer = date('l j F Y H');
       $send = true;
       global $re;
       global $db;
@@ -30,16 +29,27 @@ function contact_index(){
       if(strlen($message) <10 ){
          $send = false;
       }
-      var_dump($db['main']);
       if($send){
-         $db["main"]->beginTransaction();
-         $db["main"]->exec("INSERT INTO `webpizza`.`messages` (`firstname`, `lastname`, `email`, `times`, `messages`) 
-                           VALUES (".$firstname.",". $lastname.",". $email.",". $timer.",". $message.");");
-         $db["main"]->commit();
+         $query = $db["main"]->prepare("INSERT INTO `webpizza`.`messages` (`firstname`, `lastname`, `email`, `message`, `sending_timestamp`) 
+                           VALUES (:firstname, :lastname, :email, :message, :timer)");
+         $query -> bindValue(':firstname', $firstname, PDO::PARAM_STR_CHAR);
+         $query -> bindValue(':lastname', $lastname, PDO::PARAM_STR_CHAR);
+         $query -> bindValue(':email', $email, PDO::PARAM_STR);
+         $query -> bindValue(':message', $message, PDO::PARAM_STR);
+         $query -> bindValue(':timer', time(), PDO::PARAM_INT);
+         $result = $query->execute();
+
+         if($result){
+            $_SESSION["contact"] = ["Le message a bien été envoyé","success"];
+         }else{
+            $_SESSION["contact"] = ["Le message n'a pas pu être envoyé","danger"];
+         }
       }
    }else{
       echo "Le formulaire ne peut être traité qu'avec la méthode POST";
    }
+   header("location: ".$_SERVER[HTTP_REFERER]."#contact");
+   exit();
 }
 
 ?>
