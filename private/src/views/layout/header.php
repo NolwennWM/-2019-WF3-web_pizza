@@ -35,28 +35,37 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "pizzas" ? 'active' : '') ?>" href="/pizzas">Pizzas</a>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "pizzas" ? 'active' : '') ?>" href="<?= url("pizzas"); ?>">Pizzas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "salads" ? 'active' : '') ?>" href="/salades">Salades</a>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "salads" ? 'active' : '') ?>" href="<?= url("salads"); ?>">Salades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "desserts" ? 'active' : '') ?>" href="/desserts">Desserts</a>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "desserts" ? 'active' : '') ?>" href="<?= url("desserts"); ?>">Desserts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "drinks" ? 'active' : '') ?>" href="/boissons">Boissons</a>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "drinks" ? 'active' : '') ?>" href="<?= url("drinks"); ?>">Boissons</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "menus" ? 'active' : '') ?>" href="/menus">Menus</a>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "menus" ? 'active' : '') ?>" href="<?= url("menus"); ?>">Menus</a>
                         </li>
                     </ul>
 
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link <?= ($GLOBALS['route_active']== "account" ? 'active' : '') ?>" href="/mon-compte">Mon Compte</a>
+                        <?php if(isset($_SESSION["user"]) && !empty($_SESSION['user'])): ?>
+                            <a class="nav-link dropdown-toggle <?= ($GLOBALS['route_active']== "account" ? 'active' : '') ?>" href="#" id="navbarDropdown" role="button" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $_SESSION['user']['fullname'] ?></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<?= url("account"); ?>">Mon Compte</a>
+                                <a class="dropdown-item" href="<?= url("logout"); ?>">Deconnexion</a>
+                            </div>
+                        <?php else: ?>
+                            <a class="nav-link <?= ($GLOBALS['route_active']== "account" ? 'active' : '') ?>" href="<?= url("login"); ?>">Connexion</a>
+                        <?php endif; ?> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link cart <?= ($GLOBALS['route_active']== "order" ? 'active' : '') ?>" href="/panier">Panier</a>
+                            <a class="nav-link cart <?= ($GLOBALS['route_active']== "order" ? 'active' : '') ?>" href="<?= url("order"); ?>">Panier</a>
                         </li>
                     </ul>
                 </div>
@@ -65,6 +74,13 @@
         </nav>
     </header>
     <!-- end #main-header -->
-
+    <?php
+        if(hasFlashbag()):
+            $flash = getFlashbag();
+    ?>
+        <div class="alert alert-<?= $flash["state"]; ?>"><?= $flash["message"]; ?></div>
+    <?php 
+        endif;
+    ?>
     <!-- Main Content -->
     <div id="main-content">

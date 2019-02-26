@@ -40,16 +40,15 @@ function contact_index(){
          $result = $query->execute();
 
          if($result){
-            $_SESSION["contact"] = ["Le message a bien été envoyé","success"];
+            setFlashbag('success', "Le message a bien été envoyé");
          }else{
-            $_SESSION["contact"] = ["Le message n'a pas pu être envoyé","danger"];
+            setFlashbag('danger', "Le message n'a pas pu être envoyé");
          }
       }
    }else{
       echo "Le formulaire ne peut être traité qu'avec la méthode POST";
    }
-   header("location: ".$_SERVER[HTTP_REFERER]."#contact");
-   exit();
+   redirect($_SERVER[HTTP_REFERER]);
 }
 
 ?>

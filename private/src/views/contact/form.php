@@ -1,13 +1,5 @@
 <section id="contact">
     <div class="container">
-        <?php
-            if(isset($_SESSION["contact"])):
-        ?>
-        <div class="alert alert-<?= $_SESSION["contact"][1]; ?>""><?= $_SESSION["contact"][0]; ?></div>
-        <?php 
-            unset($_SESSION['contact']);
-            endif;
-         ?>
         <form name="contact" action="/contact" class="row" method="post"  novalidate>
 
             <!-- Champ Prénom -->

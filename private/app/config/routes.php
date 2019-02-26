@@ -27,6 +27,7 @@ $routes = [
 
     // Pages de sécurité
     ["login", "/connexion", "security:login", ["HEAD","GET","POST"]],
+    ["logout", "/deconnexion", "security:logout", ["HEAD","GET","POST"]],
     ["register", "/inscription", "security:register", ["HEAD","GET","POST"]],
     ["forgotten_password", "/mot-de-passe-oublie", "security:forgotten_password", ["HEAD","GET","POST"]],
 

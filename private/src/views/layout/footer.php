@@ -2,7 +2,7 @@
     <!-- end #main-content -->
     <?php 
     // ou l'intégrer sur chaque page indépendament pour plus de modularité.
-        $noContact = ['order', 'account'];
+        $noContact = ['order', 'account', 'login', 'register', 'forgotten_password'];
         if(!in_array($GLOBALS['route_active'], $noContact)){
             include_once "../private/src/views/contact/form.php";
         }

@@ -70,6 +70,9 @@ textarea {
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
 }
+.dropdown-menu{
+    background-color: rgba(192, 10, 39, 0.8);
+}
 
 #main-header .navbar a.active,
 #main-header .navbar a:hover {
