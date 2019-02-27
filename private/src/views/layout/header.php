@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <base href="/">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,6 +60,12 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="<?= url("account"); ?>">Mon Compte</a>
                                 <a class="dropdown-item" href="<?= url("logout"); ?>">Deconnexion</a>
+                                <?php if(isset($_SESSION["user"]) && $_SESSION['user']['email']== 'admin@admin.admin'): ?>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="<?= url("create"); ?>">Ajouter</a>
+                                <!-- <a class="dropdown-item" href="<?= url("update"); ?>">Modifier</a> -->
+                                <!-- <a class="dropdown-item" href="<?= url("delete"); ?>">Supprimer</a> -->
+                                <?php endif; ?>
                             </div>
                         <?php else: ?>
                             <a class="nav-link <?= ($GLOBALS['route_active']== "account" ? 'active' : '') ?>" href="<?= url("login"); ?>">Connexion</a>
@@ -82,5 +89,6 @@
     <?php 
         endif;
     ?>
+    
     <!-- Main Content -->
     <div id="main-content">

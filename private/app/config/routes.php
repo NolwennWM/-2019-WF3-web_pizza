@@ -22,6 +22,11 @@ $routes = [
     ["drinks", "/boissons", "products:drinks", ["HEAD","GET"]],
     ["menus", "/menus", "products:menus", ["HEAD","GET"]],
 
+    
+    ["create", "/ajouter", "products:create", ["HEAD","GET"]],
+    ["update", "/modifier", "products:update", ["HEAD","GET"]],
+    ["delete", "/supprimer", "products:delete", ["HEAD","GET"]],
+
     // Page de contact
     ["contact", "/contact", "contact:index", ["HEAD","GET","POST"]],
 

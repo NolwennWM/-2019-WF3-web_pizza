@@ -8,7 +8,8 @@ if(!isset($routes)){
 
 // Récupération de l'uri courant
 if(!empty($_SERVER['REQUEST_URI'])){
-    $uri = $_SERVER['REQUEST_URI'];
+    $uriExploded = explode('?', $_SERVER['REQUEST_URI']);
+    $uri = $uriExploded[0];
 }
 
 // Recherche de l'URI dans le tableau de routage.
