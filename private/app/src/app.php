@@ -15,6 +15,8 @@ require_once "../private/app/src/db_connect.php";
 require_once "../private/app/src/routing.php";
 // Inclusion des fonctions "Utils".
 require_once "../private/app/src/load_utils.php";
+// 
+require_once "../private/src/controllers/main_controler.php";
 // Compilation de la page.
 require_once "../private/app/src/compile.php";
 

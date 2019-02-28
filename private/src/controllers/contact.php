@@ -9,18 +9,18 @@
 
 function contact_index(){
    if($_SERVER['REQUEST_METHOD'] === "POST"){
-      $firstname = isset($_POST['firstname']) ? $_POST['firstname'] : null;
-      $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : null;
+      $firstname = isset($_POST['firstname']) ? trim($_POST['firstname']) : null;
+      $lastname = isset($_POST['lastname']) ? trim($_POST['lastname']) : null;
       $email = isset($_POST['email']) ? $_POST['email'] : null;
       $message = isset($_POST['message']) ? $_POST['message'] : null;
       $send = true;
       global $re;
       global $db;
 
-      if(!preg_match($re["firstname"], $firstname)){
+      if(!preg_match($re["name"], $firstname)){
          $send = false;
       }
-      if(!preg_match($re["lastname"], $lastname)){
+      if(!preg_match($re["name"], $lastname)){
          $send = false;
       }
       if(!preg_match($re["email"], $email)){

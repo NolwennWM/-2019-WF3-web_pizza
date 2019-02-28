@@ -25,6 +25,15 @@
             </option>
             <?php endforeach; ?>
         </select>
+        <br>
+        <label for="ingredients">ingrédients</label><br>
+        <select name="ingredients[]" id="ingredients" multiple>
+            <?php foreach(getIngredients() as $ingre): ?>
+            <option value="<?= $ingre['id']; ?>" <?= (in_array($ingre['name'], $ingredients)? "selected": null); ?> >
+                <?= $ingre['name'] ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
         <button>Valider</button>
     </div>
 </form>
