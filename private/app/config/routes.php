@@ -39,6 +39,7 @@ $routes = [
     // Page de commande
     ["order", "/panier", "order:index", ["HEAD","GET"]],
     ["add", "/ajout-produit", "order:add", ["HEAD","GET"]],
+    ["cancel", "/suppression-commande", "order:delete", ["HEAD","GET"]],
 
     // Profil utilisateur
     ["account", "/mon-compte", "account", ["HEAD","GET"]],

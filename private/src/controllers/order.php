@@ -8,6 +8,34 @@
  */
 
  function order_index(){
+    include_once "../private/src/models/products.php";
+    include_once "../private/src/models/order.php";
+
+    $user_sess_id = session_id();
+    $user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+    $listproduct =[];
+    $total = 0;
+
+   // récupération de la commande client
+    if ($user_id != null) {
+        $order = getOrderByUser($user_id);
+    } else {
+        $order = getOrderByUser($user_sess_id);
+    }
+    
+    if (!$order) {
+        $order = [];
+        $orderlist = [];
+    } else {
+        $orderlist = getOrderProducts($order['id']);
+    }
+    foreach($orderlist as $id){
+        array_push($listproduct, $id['id_product']);
+        $total += $id["qty"];
+    }
+    if(!empty($listproduct)){
+        $listproduct = getProductsByIdList($listproduct);
+    }
     include_once "../private/src/views/order/index.php";
  }
 
@@ -92,5 +120,28 @@ function order_add(){
     }
    // redirection de l'utilisateur
     redirect($_SERVER['HTTP_REFERER']);
+}
+
+function order_delete(){
+    include_once "../private/src/models/products.php";
+    include_once "../private/src/models/order.php";
+
+    $user_sess_id = session_id();
+    $user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+
+   // récupération de la commande client
+    if ($user_id != null) {
+        $order = getOrderByUser($user_id);
+    } else {
+        $order = getOrderByUser($user_sess_id);
+    }
+    $res = deleteOrderById($order['id']);
+
+    if($res){
+        setFlashbag("success", "Panier Supprimé");
+    }else{
+        setFlashbag("warning", "Panier non supprimé");
+    }
+    redirect(url('order'));
 }
 ?>

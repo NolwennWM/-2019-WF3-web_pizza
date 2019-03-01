@@ -77,7 +77,7 @@ function getOrderProducts($order_id)
 {
     global $db;
 
-    $sql = "SELECT `id`, `id_product`, `qty`, `price` FROM `order_products` WHERE `id_order`=:id_order ";
+    $sql = "SELECT `id`, `id_product`, `qty`, `price`, `amount` FROM `order_products` WHERE `id_order`=:id_order ";
 
     $query = $db['main']->prepare($sql);
     $query->bindValue(':id_order', $order_id, PDO::PARAM_INT);
@@ -124,5 +124,18 @@ function updateProductInOrder($product, $order_product_id)
     $query->bindValue(':id', $order_product_id, PDO::PARAM_INT);
     
     return $query->execute();
+}
+
+function deleteOrderById($id){
+    global $db;
+    $q = $db['main'] -> prepare("DELETE FROM `order_products` WHERE `id_order`=:id");
+    $q -> bindValue(':id', $id, PDO::PARAM_INT);
+    $res = $q -> execute();
+    if($res){
+        $q = $db['main'] -> prepare("DELETE FROM `orders` WHERE `id`=:id");
+        $q -> bindValue(':id', $id, PDO::PARAM_INT);
+        $res = $q -> execute();
+    }
+    return $res;
 }
 ?>

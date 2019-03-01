@@ -2,8 +2,13 @@
 
 function getProducts($type){
     global $db;
-    $q = $db['main']->query("SELECT id, name, illustration, price FROM products WHERE `type`= '".$type."'");
+    $q = $db['main']->query("SELECT id, name, illustration, price FROM products WHERE `state` = '1' AND `type`= '".$type."'");
     return $q->fetchAll(PDO::FETCH_ASSOC);
+}
+function getProductsByIdList($list){
+    global $db;
+    $q = $db['main']->query("SELECT id, name FROM products WHERE `id` IN (".implode(',',$list).")");
+    return $q->fetchAll(PDO::FETCH_COLUMN |PDO::FETCH_GROUP);
 }
 /**
  * Recupération d'un produit

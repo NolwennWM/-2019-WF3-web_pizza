@@ -64,12 +64,15 @@ function products_create(){
         //contrôle des données
         if(!preg_match($re["name"], $name) || strlen($name)>40){
             $isValid = false;
+            setFlashbag("warning", "Nom invalide");
         }
         if(!preg_match($re["image"], $illustration) || strlen($illustration)>255){
             $isValid = false;
+            setFlashbag("warning", "Illustration Invalide");
         }
-        if(!preg_match($re["name"], $name) ){
+        if($ingredients == []){
             $isValid = false;
+            setFlashbag("warning", "Pas d'ingrédients");
         }
 
         if($isValid){
@@ -111,10 +114,11 @@ function products_delete(){
     }
 
     if($_SERVER['REQUEST_METHOD'] ==='POST'){
-        $q = $db['main']->prepare("DELETE FROM product_ingredients WHERE id_product=:id");
-        $q -> bindValue(":id", $article_id, PDO::PARAM_INT);
-        $q-> execute();
-        $q = $db['main']->prepare("DELETE FROM products WHERE id=:id");
+        // $q = $db['main']->prepare("DELETE FROM product_ingredients WHERE id_product=:id");
+        // $q -> bindValue(":id", $article_id, PDO::PARAM_INT);
+        // $q-> execute();
+        // $q = $db['main']->prepare("DELETE FROM products WHERE id=:id");
+        $q = $db['main']->prepare("UPDATE products SET `state`='0' WHERE id=:id");
         $q -> bindValue(":id", $article_id, PDO::PARAM_INT);
         $q-> execute();
         setFlashbag("success", "Le produit a été supprimé");
@@ -176,20 +180,28 @@ function products_update(){
         }
 
         if($isValid){
-            // $q = $db['main']->prepare("SELECT id_ingredient FROM product_ingredients WHERE id_product=:id");
-            // $q -> bindValue(':id', $article_id, PDO::PARAM_INT);
-            // $q -> execute();
-            // $oldIngredients = $q->fetchAll(PDO::FETCH_ASSOC);
+            $q = $db['main']->prepare("SELECT id_ingredient FROM product_ingredients WHERE id_product=:id");
+            $q -> bindValue(':id', $article_id, PDO::PARAM_INT);
+            $q -> execute();
+            $oldIngredients = $q->fetchAll(PDO::FETCH_COLUMN);
 
-            // $q = $db['main']->prepare("INSERT INTO product_ingredients (`id_product`,`id_ingredient`) VALUES (:product, :ingredient)");
-            // $q -> bindValue(':product', $article_id, PDO::PARAM_INT);
-            // foreach($oldIngredients as $ing){
-            //     if(!in_array($ing['id_ingredient'], $ingredients)){
-            //         $q -> bindValue(':ingredient', $article_id, PDO::PARAM_INT);
-            //         $q -> execute();
-            //     }
-            // }
-            
+            $q = $db['main']->prepare("INSERT INTO product_ingredients (`id_product`,`id_ingredient`) VALUES (:product, :ingredient)");
+            $q -> bindValue(':product', $article_id, PDO::PARAM_INT);
+            foreach($ingredients as $ing){
+                if(!in_array($ing, $oldIngredients)){
+                    $q -> bindValue(':ingredient', $ing, PDO::PARAM_INT);
+                    $q -> execute();
+                }
+            }
+            $q = $db['main']->prepare("DELETE FROM product_ingredients WHERE id_product=:id_prod and id_ingredient=:id_ing");
+            $q -> bindValue(":id_prod", $article_id, PDO::PARAM_INT);
+            foreach($oldIngredients as $ing){
+                if(!in_array($ing, $ingredients)){
+                    $q -> bindValue(':id_ing', $ing, PDO::PARAM_INT);
+                    $q -> execute();
+                }
+            }
+
             $q = $db['main']->prepare("UPDATE products SET `price`= :price, `description`= :description, 
                                         `name`= :name, `type`= :type, `illustration`= :illustration WHERE id=:id");
             $q -> bindValue(':price', $price, PDO::PARAM_STR);

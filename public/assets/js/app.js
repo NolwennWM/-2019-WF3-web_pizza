@@ -97,5 +97,11 @@ $(document).ready(() => {
             return false;
         }
     });
-    
+    $('select[multiple] option').mousedown(function(e) {
+        e.preventDefault();
+        $(this).toggleClass('selected');
+      
+        $(this).prop('selected', !$(this).prop('selected'));
+        return false;
+    });
 });
